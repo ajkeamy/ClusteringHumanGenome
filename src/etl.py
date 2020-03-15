@@ -22,11 +22,14 @@ def folder_manager(dictionary):
     reference genome.
     """
      # Make Data Source folder
-    os.system('mkdir data_source')
+    if not os.path.isdir('data_source'):
+        os.system('mkdir data_source')
     # Make folder containing reference genome
-    os.system('mkdir ref_genome')
+    if not os.path.isdir('ref_genome'):
+        os.system('mkdir ref_genome')
     # make folder containing data for PCA/merging/zipping
-    os.system('mkdir data_sourcer')
+    if not os.path.isdir('data_sourcer'):
+        os.system('mkdir data_sourcer')
     # Copy reference genome to directory
     os.system("cp -r " + dictionary['reference'] + "* ref_genome")
 
