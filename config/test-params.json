@@ -30,6 +30,6 @@
     "eigenvalue": "plink.eigenval",
     "eigenvector": "plink.eigenvec",
     "merged_file": "data_sourcer/merge_all_vcf.vcf",
-    "pop_code": "/testdata/igsr_samples.tsv",
+    "pop_code": "testdata/igsr_samples.tsv",
     "outpath": "chromosome_data"
 }
