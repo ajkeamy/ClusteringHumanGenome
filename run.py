@@ -24,7 +24,7 @@ def main():
         folder_manager(dictionary)
         fastq_bam_converter(dictionary)
         get_dictionary_index(dictionary)
-        bam_vcf_converter(dictionary, 'SP1.bam')
+        sam_bam_vcf_converter(dictionary, 'SP1.bam')
         filter_chromosomes(dictionary)
         compress_vcf()
         merge_vcf()
