@@ -15,11 +15,12 @@ import seaborn as sns
 
 
 
-  """ 
+ 
+def folder_manager(dictionary):
+    """ 
     Folder set-up to get store results. Create folder to grab 
     reference genome.
     """
-def folder_manager(dictionary):
      # Make Data Source folder
     os.system('mkdir data_source')
     # Make folder containing reference genome
@@ -30,8 +31,8 @@ def folder_manager(dictionary):
     os.system("cp -r " + dictionary['reference'] + "* ref_genome")
 
 
- def fastq_bam_converter(dictionary):
-          """
+def fastq_bam_converter(dictionary):
+    """
     Convert Fastq files to BAM.
     Store Index of the reference genome. 
     """
@@ -41,7 +42,7 @@ def folder_manager(dictionary):
 
 
 def get_dictionary_index(dictionary): 
-     """
+    """
     Convert reference genome to dictionary
     Store Index of the reference genome. 
     """
@@ -52,7 +53,7 @@ def get_dictionary_index(dictionary):
     
 
 def bam_vcf_converter(dictionary, filename):
-         """
+    """
     Convert BAM files to VCF.
     """
     # Add or replace: input is create from fast_bam_converter
@@ -62,18 +63,18 @@ def bam_vcf_converter(dictionary, filename):
     os.system('gatk HaplotypeCaller -R ' + dictionary['ref_genome_file'] + \
     ' -I align.bam -O ref_genome/bam_vcf_converted.vcf')
 
-    def filter_chromosomes(dictionary):
-        """
+def filter_chromosomes(dictionary):
+    """
     Filter chromosomes using Plink2 commands.
     Filter using maf, mind, geno, and snps only.
     Output as VCF File. 
     """
-        os.system('plink2 --vcf ' + dictionary['ch19'] +  ' --make-bed --snps-only --maf ' + \
-        str(dictionary['maf_value']) + ' --geno ' + str(dictionary['geno_value']) + \
-        " --mind " + str(dictionary['mind_value']) +  ' --recode vcf --out data_sourcer/cleaned_ch19')
+    os.system('plink2 --vcf ' + dictionary['ch19'] +  ' --make-bed --snps-only --maf ' + \
+    str(dictionary['maf_value']) + ' --geno ' + str(dictionary['geno_value']) + \
+    " --mind " + str(dictionary['mind_value']) +  ' --recode vcf --out data_sourcer/cleaned_ch19')
 
 def filter_chromosomes(dictionary):
-        """
+    """
     Filter chromosomes using Plink2 commands.
     Filter using maf, mind, geno, and snps only.
     Output as VCF File. 
@@ -92,11 +93,11 @@ def filter_chromosomes(dictionary):
     " --mind " + str(dictionary['mind_value']) +  ' --recode vcf --out data_sourcer/cleaned_ch22')
    
   
-def compress_vcf(filestore):
-     """ 
+def compress_vcf():
+    """ 
     Take in filter chromosomes and compress
     it it gz format.
-   """
+    """
     os.system('bgzip -c data_sourcer/cleaned_ch19.vcf > data_sourcer/cleaned_ch19.vcf.gz')
     os.system('bgzip -c data_sourcer/cleaned_ch20.vcf > data_sourcer/cleaned_ch20.vcf.gz')
     os.system('bgzip -c data_sourcer/cleaned_ch21.vcf > data_sourcer/cleaned_ch21.vcf.gz')
@@ -111,14 +112,14 @@ def merge_vcf():
     data_sourcer/cleaned_ch21.vcf.gz data_sourcer/cleaned_ch22.vcf.gz -o data_sourcer/merge_all_vcf.vcf')
     
 def pca(mergedfile):
-     """
+    """
     Run PCA on merged file 
     """
     os.system('%time !plink2 --vcf mergedfile --pca 2')
     
 
 def plotting(eigenval, eigenvec, population_tsv):
-     """
+    """
     Plotting PCA using eigen vectors and Eigen values.
     Labeling clusters using population codes. 
     """
