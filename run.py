@@ -1,4 +1,4 @@
-# Imports
+# Import Statements 
 import pandas as pd
 import numpy as np
 import gzip
@@ -9,25 +9,31 @@ import os
 import shlex
 import sys
 import subprocess as sp
+import json
+import os
+from etl import *
 
 
-def plotting():
-    eigenvec = pd.read_csv('plink.eigenvec', delimiter=' ',header=None, names= ['a','b','x','y'])
-    pca = plt.scatter(eigenvec['x'], eigenvec['y'], s=2)
-    plt.savefig('pca.png')
+def main(): 
+    # Import Json file
+    dictionary = json.load(open("test-params.json"))
 
-
-if __name__ == '__main__':
     arguments= sys.argv
     print(arguments)
     if arguments[1] == 'data-test':
-        os.system('chmod 700 src/test.sh')
-        os.system('./src/test.sh')
+        folder_manager()
+        fastq_bam_converter(dictionary)
+        get_dictionary_index(dictionary)
+        bam_vcf_converter(dictionary, 'SP1.bam')
+
     
 
     if arguments[2] == 'process':
-        os.system('chmod 700 src/process.sh')
-        os.system('./src/process.sh')
-    
-        plotting()
+        filter_chromosomes()
+        compress_vcf()
+        merge_vcf()
+        pca(dictionary['merged_file'])
+        plotting(dictionary['eigenvalue'], dictionary['eigenvector'], dictionary['pop_code'])
 
+if __name__ == '__main__':
+    main()
