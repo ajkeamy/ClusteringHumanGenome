@@ -55,13 +55,13 @@ def get_dictionary_index(dictionary):
     os.system('samtools faidx ' + dictionary['ref_genome_file'])
     
 
-def bam_vcf_converter(dictionary, filename):
+def sam_bam_vcf_converter(dictionary, filename):
     """
     Convert BAM files to VCF.
     """
-    # Add or replace: input is create from fast_bam_converter
+    # Convert Sam to BAM
     os.system('gatk AddOrReplaceReadGroups \
-    -I filename -O align.bam -RGLB lib1 -RGPL pilot -RGPU SRR008003 -RGSM 20')
+    -I ' +  filename + ' -O align.bam -RGLB lib1 -RGPL pilot -RGPU SRR008003 -RGSM 20')
     #Convert Bam to VCF
     os.system('gatk HaplotypeCaller -R ' + dictionary['ref_genome_file'] + \
     ' -I align.bam -O ref_genome/bam_vcf_converted.vcf')
@@ -118,7 +118,7 @@ def pca(mergedfile):
     """
     Run PCA on merged file 
     """
-    os.system('plink2 --vcf mergedfile --pca 2')
+    os.system('plink2 --vcf ' + mergedfile + ' --pca 2')
     
 
 def plotting(eigenval, eigenvec, population_tsv):
