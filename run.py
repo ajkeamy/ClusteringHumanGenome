@@ -20,15 +20,11 @@ def main():
 
     arguments= sys.argv
     print(arguments)
-    if arguments[1] == 'data-test':
+    if arguments[1] == 'test-project':
         folder_manager(dictionary)
         fastq_bam_converter(dictionary)
         get_dictionary_index(dictionary)
         bam_vcf_converter(dictionary, 'SP1.bam')
-
-    
-
-    if arguments[2] == 'process':
         filter_chromosomes(dictionary)
         compress_vcf()
         merge_vcf()
