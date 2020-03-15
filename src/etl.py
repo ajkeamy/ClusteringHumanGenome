@@ -115,7 +115,7 @@ def pca(mergedfile):
     """
     Run PCA on merged file 
     """
-    os.system('%time !plink2 --vcf mergedfile --pca 2')
+    os.system('plink2 --vcf mergedfile --pca 2')
     
 
 def plotting(eigenval, eigenvec, population_tsv):
