@@ -61,7 +61,7 @@ def unzip_gz(url, outpath):
 
     with gzip.open(url, 'rb') as f1:
         with open('file.txt', 'wb') as f2:
-        shutil.copyfileobj(f1, f2)
+            shutil.copyfileobj(f1, f2)
 
 
 def fastq_bam_converter(dictionary):
