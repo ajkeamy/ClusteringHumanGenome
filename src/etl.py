@@ -33,6 +33,36 @@ def folder_manager(dictionary):
     # Copy reference genome to directory
     os.system("cp -r " + dictionary['reference'] + "* ref_genome")
 
+def download_data(chrom, outpath):
+    """
+    Downloads the urls to get the path. 
+    Checks to see if path exist. If no path exists,
+    a new path  is made and added to directory. 
+    Loops through json file, and retrieves
+    urls. Renamed based on chromsome numbers and 
+    print statement appears when finished
+    """
+    if not os.path.exists(outpath):
+        os.mkdir(outpath)
+    start = string.find('chr')+3
+    string[start: start+ string[start:].find('.')]    
+    # print('Downloading data from: {}'.format(chrom))
+    for chr in chrom:
+        start = string.find('chr')+3
+        name = string[start: start+ string[start:].find('.')]    
+    print("File Downloaded")
+
+# Unzips gzip files
+def unzip_gz(url, outpath): 
+    """ 
+    The genetic data is downloaded in a format where it is 
+    gz zipped. This function unzips the file
+    """
+
+    with gzip.open(url, 'rb') as f1:
+        with open('file.txt', 'wb') as f2:
+        shutil.copyfileobj(f1, f2)
+
 
 def fastq_bam_converter(dictionary):
     """
@@ -65,16 +95,6 @@ def sam_bam_vcf_converter(dictionary, filename):
     #Convert Bam to VCF
     os.system('gatk HaplotypeCaller -R ' + dictionary['ref_genome_file'] + \
     ' -I align.bam -O ref_genome/bam_vcf_converted.vcf')
-
-def filter_chromosomes(dictionary):
-    """
-    Filter chromosomes using Plink2 commands.
-    Filter using maf, mind, geno, and snps only.
-    Output as VCF File. 
-    """
-    os.system('plink2 --vcf ' + dictionary['ch19'] +  ' --make-bed --snps-only --maf ' + \
-    str(dictionary['maf_value']) + ' --geno ' + str(dictionary['geno_value']) + \
-    " --mind " + str(dictionary['mind_value']) +  ' --recode vcf --out data_sourcer/cleaned_ch19')
 
 def filter_chromosomes(dictionary):
     """
